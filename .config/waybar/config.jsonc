@@ -213,9 +213,9 @@
         "menu": "on-click",
         "menu-file": "~/.config/waybar/power_menu.xml",
             "menu-actions": {
-            "shutdown": "systemctl shutdown",
+            "shutdown": "systemctl poweroff",
             "reboot": "systemctl reboot",
-            "suspend": "systemctl suspend",
+            //"suspend": "systemctl suspend",
             "hibernate": "systemctl hibernate",
         },
 }
