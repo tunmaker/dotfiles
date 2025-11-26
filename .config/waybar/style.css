@@ -1,104 +1,55 @@
-@define-color base   #1e1e2e;
-@define-color mantle #181825;
-@define-color crust  #11111b;
-
-@define-color text     #cdd6f4;
-@define-color subtext0 #a6adc8;
-@define-color subtext1 #bac2de;
-
-@define-color surface0 #313244;
-@define-color surface1 #45475a;
-@define-color surface2 #585b70;
-
-@define-color overlay0 #6c7086;
-@define-color overlay1 #7f849c;
-@define-color overlay2 #9399b2;
-
-@define-color blue      #89b4fa;
-@define-color lavender  #b4befe;
-@define-color sapphire  #74c7ec;
-@define-color sky       #89dceb;
-@define-color teal      #94e2d5;
-@define-color green     #a6e3a1;
-@define-color yellow    #f9e2af;
-@define-color peach     #fab387;
-@define-color maroon    #eba0ac;
-@define-color red       #f38ba8;
-@define-color mauve     #cba6f7;
-@define-color pink      #f5c2e7;
-@define-color flamingo  #f2cdcd;
-@define-color rosewater #f5e0dc;
+@import "colors-waybar.css";
 
 * {
-    font-family: Cantarell, Symbols Nerd Font;
-    font-weight: bolder;
+    font-family: Mononoki, "Font Awesome 6 Free", "Font Awesome 6 Brands";
     font-size: 14px;
+    font-weight: bold;
 }
 
 window#waybar {
-    background-color: @crust;
-    color: @text;
+    background-color: transparent;
     transition-property: background-color;
     transition-duration: .5s;
+    color: @color7;
 }
 
 window#waybar.hidden {
-    opacity: 0.2;
+    opacity: 0.8;
 }
 
-/*
- w indow#waybar.empt*y {
- background-color: transparent;
- }
- window#waybar.solo {
- background-color: #FFFFFF;
- }
- */
-
-window#waybar.termite {
-    background-color: #3F3F3F;
-}
-
-window#waybar.chromium {
-    background-color: #000000;
-    border: none;
-}
 
 button {
-    /* Use box-shadow instead of border so the text isn't offset */
     box-shadow: inset 0 -3px transparent;
-    /* Avoid rounded borders under each button name */
     border: none;
-    border-radius: 0;
+    border-radius: 100%;
 }
 
-/* https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect */
+button:hover {
+    background: inherit;
+}
 
-#workspaces button:hover {
-color: @blue;
-box-shadow: inherit;
-text-shadow: inherit;
-background: @crust;
-border: @crust;
+#pulseaudio:hover {
+}
+
+#window{
+font-size: 9px;
+color: @background;
 }
 
 #workspaces button {
-padding: 0 5px;
-color: @surface2;
-margin: 4px 0 4px 6px;
-transition: color 200ms ease-in-out;
-}
-
-#workspaces button.selected {
-color: @blue;
+background-color: transparent;
+padding: 0px 4px;
+color: @color5;
+font-weight: 100;
 }
 
 #workspaces button.active {
-color: @mauve;
+color: @color6;
 }
 
+
 #workspaces button.urgent {
-color: @red;
+color: @color1;
 }
 
 #clock,
@@ -111,73 +62,147 @@ color: @red;
 #network,
 #pulseaudio,
 #wireplumber,
-#custom-pacman,
-#custom-power,
+#custom-media,
+#custom-mem,
 #tray,
 #mode,
 #idle_inhibitor,
 #scratchpad,
+#power-profiles-daemon,
 #mpd {
-padding: 0 9px;
-color: @text;
-border-radius: 15px;
-margin: 5px 0;
+padding: 0 10px;
+color: @foreground;
 }
 
 #window,
 #workspaces {
-margin: 0 4px;
+margin: 0 5px 0 0px;
 }
 
-/* If workspaces is the leftmost module, reduce left margin */
+/* If workspaces is the leftmost module, omit left margin */
 .modules-left > widget:first-child > #workspaces {
-    margin-left: 2px;
+    margin-left: 0;
 }
 
-#clock {
-color: @text;
+/* If workspaces is the rightmost module, omit right margin */
+.modules-right > widget:last-child > #workspaces {
+    margin-right: 0;
 }
 
-#custom-pacman {
-color: @peach;
-}
-
-#pulseaudio {
-color: @mauve;
-}
-
-#pulseaudio.muted {
-color: @surface2;
-}
-
-#network {
-color: @blue;
-}
-
-#network.disconnected {
-color: @surface2;
-}
-
-#battery {
-color: @green;
-}
-
-#battery.warning:not(.charging) {
-color: @red;
+#custom-os_button {
+color: @background;
+font-size: 1.2rem;
+padding: 0 12px 0 8px;
+margin-left: 4px;
+margin-top: 4px;
+margin-bottom: 4px;
+border-radius: 100px;
+background-color: @color4;
 }
 
 #custom-power {
-color: @maroon;
-margin-right: 5px;
+color: @background;
+padding: 0 10px 0 10px;
+margin-left: 2px;
+margin-right: 4px;
+margin-top: 4px;
+margin-bottom: 4px;
+border-radius: 100px;
+background-color: @color5;
 }
 
-#keyboard-state > label {
-padding: 0 5px;
+#custom-power:hover{
+transition: ease 0.2s all;
+color: @color5;
+background-color: @background;
 }
 
-#keyboard-state > label.locked {
-background: rgba(0, 0, 0, 0.2);
+#clock {
+margin-right: 4px;
+margin-top: 3px;
+margin-bottom: 3px;
+border-radius: 0 100px 100px 0;
 }
+
+#battery {
+margin-bottom: 3px;
+margin-top: 3px;
+}
+
+#battery.charging, #battery.plugged {
+color: #26A65B;
+}
+
+@keyframes blink {
+    to {
+        color: #ffffff;
+    }
+}
+
+/* Using steps() instead of linear as a timing function to limit cpu usage */
+#battery.critical:not(.charging) {
+color: #f53c3c;
+animation-name: blink;
+animation-duration: 0.5s;
+animation-timing-function: steps(12);
+animation-iteration-count: infinite;
+animation-direction: alternate;
+}
+
+label:focus {
+    background-color: #000000;
+}
+
+
+#custom-mem {
+background-color: transparent;
+margin-right:6px;
+margin-left:6px;
+}
+
+#disk {
+background-color: transparent;
+}
+
+#backlight {
+background-color: transparent;
+}
+
+#network {
+background-color: transparent;
+}
+
+#network.disconnected {
+color: #f53c3c;
+}
+
+#pulseaudio {
+margin-left: 4px;
+background-color: transparent;
+}
+
+#pulseaudio.microphone {
+margin-left: 4px;
+background-color: transparent;
+}
+
+#temperature {
+background-color: transparent;
+}
+
+#temperature.critical {
+color: #eb4d4b;
+}
+
+#idle_inhibitor {
+background-color: #2d3436;
+}
+
+#idle_inhibitor.activated {
+background-color: #ecf0f1;
+color: #2d3436;
+}
+
 
 #scratchpad {
 background: rgba(0, 0, 0, 0.2);
@@ -187,4 +212,39 @@ background: rgba(0, 0, 0, 0.2);
 background-color: transparent;
 }
 
-/* vim: ft=sass */
+#privacy {
+padding: 0;
+}
+
+#privacy-item {
+padding: 0 5px;
+color: white;
+}
+
+#privacy-item.screenshare {
+background-color: #cf5700;
+}
+
+#privacy-item.audio-in {
+background-color: #1ca000;
+}
+
+#privacy-item.audio-out {
+background-color: #0069d4;
+}
+
+.modules-left {
+    margin: 10px 0 0 10px;
+    background-color: @background;
+    border-radius: 40px;
+}
+
+.modules-center {
+    margin: 10px 0 0 0;
+}
+
+.modules-right {
+    margin: 10px 10px 0 0;
+    background-color: @background;
+    border-radius: 40px;
+}
