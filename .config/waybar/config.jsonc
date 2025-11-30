@@ -117,7 +117,7 @@
         "critical-threshold": 80,
         "format-critical": "{temperatureC}°C {icon}",
         "format": "{temperatureC}°C {icon}",
-        "format-icons": ["", "", ""]
+        "format-icons": [""]
     },
     "backlight": {
       // "device": "acpi_video1",
@@ -174,31 +174,6 @@
         "width" : 25,
         "interval":1
     },
-    /*"pulseaudio": {
-      // "scroll-step": 1, // %, can be a float
-      "format": "{icon}",
-      "format-bluetooth": "{icon}",
-      "format-bluetooth-muted": "{icon}",
-      "format-muted": "",
-      "format-source": "",
-      "format-source-muted": "",
-      "format-icons": {
-        "headphone": "",
-        "hands-free": "",
-        "headset": "",
-        "phone": "",
-        "portable": "",
-        "car": "",
-        "default": [
-          "",
-          "",
-          ""
-        ]
-      },
-      "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
-      "on-click-right": "pactl set-source-mute @DEFAULT_SOURCE@ toggle",
-      "on-click-middle": "pavucontrol-qt"
-    },*/
     "pulseaudio": {
         "format": "{icon}",
         "format-muted": "",
@@ -233,7 +208,7 @@
         "max-length": 40,
         "format-icons": {
             "spotify": "",
-            "default": "🎜"
+            "default": ""
         },
         "escape": true,
         "exec": "$HOME/.config/waybar/mediaplayer.py",
