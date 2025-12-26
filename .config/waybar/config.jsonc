@@ -113,7 +113,7 @@
         "format": "{}% "
     },
     "temperature": {
-        "hwmon-path": "/sys/class/hwmon/hwmon3/temp1_input", //change for your cpu temp
+        "hwmon-path": "/sys/class/hwmon/hwmon4/temp1_input", //change for your cpu temp
         "critical-threshold": 80,
         "format-critical": "{temperatureC}°C {icon}",
         "format": "{temperatureC}°C {icon}",
@@ -203,12 +203,11 @@
         "tooltip-format": "  at {volume}%"
     },
     "custom/media": {
-        "format": "{icon} {text}",
+        "format": "{icon}   {text}",
         "return-type": "json",
         "max-length": 40,
         "format-icons": {
-            "spotify": "",
-            "default": ""
+            "default": ""
         },
         "escape": true,
         "exec": "$HOME/.config/waybar/mediaplayer.py",
@@ -227,7 +226,7 @@
             "menu-actions": {
             "shutdown": "systemctl poweroff",
             "reboot": "systemctl reboot",
-            //"suspend": "systemctl suspend",
+            "suspend": "systemctl hybrid-sleep",
             "hibernate": "systemctl hibernate",
         },
 }
