@@ -2,17 +2,19 @@
 simply keeping trask of my dotfiles and packages
 
 ## install
-`pacman -S hyprland hypridle hyprlock waybar swww kate kitty dolphin rofi dunst hyprpolkitagent networkmanager nm-connection-editor network-manager-applet  blueman pipewire pipewire-pulse wireplumber pavucontrol-qt firefox vlc vlc-plugin-ffmpeg archlinux-xdg-menu`
+`pacman -S hyprland hypridle hyprlock waybar kate kitty dolphin rofi dunst hyprpolkitagent networkmanager nm-connection-editor network-manager-applet  blueman pipewire pipewire-pulse wireplumber pavucontrol-qt firefox vlc vlc-plugin-ffmpeg archlinux-xdg-menu`
 
 ## others
 - fonts `ttf-nerd-fonts-symbols`
 - mount android devices `kio-extras`
 - mount usb devices `udisks2 udiskie`
 - `keepassxc`
-- 
+
 ## AUR
 - [Hardinfo2](https://aur.archlinux.org/packages/hardinfo2)
 - [qview](https://aur.archlinux.org/qview.git)
+- [awww](https://archlinux.org/packages/extra/x86_64/awww/) instead of swww
+follow this gist for [screen sharing](https://gist.github.com/brunoanc/2dea6ddf6974ba4e5d26c3139ffb7580)
 
 ## inspired from:
 - https://github.com/sameemul-haque/dotfiles/tree/master
