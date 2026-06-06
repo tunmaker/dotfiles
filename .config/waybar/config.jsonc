@@ -1,29 +1,29 @@
 // -*- mode: jsonc -*-
 {
-    "layer": "top", // Waybar at top layer
-    "spacing": 4, // Gaps between modules (4px)
-    // Choose the order of the modules
+    "layer": "top",
+    "height": 48,
+    "spacing": 4,
     "modules-left": [
         "custom/os_button",
         "hyprland/workspaces",
-        "hyprland/submap",
-        "hyprland/scratchpad",
-        "custom/media"
-    ],
-    "modules-center": [
         "hyprland/window"
     ],
+    "modules-center": [
+        "custom/media",
+        "custom/media-prev",
+        "custom/media-play",
+        "custom/media-next"
+    ],
     "modules-right": [
-        //"mpd",
         "network",
+        "cpu",
+        "temperature",
+        "memory",
+        "backlight",
         "pulseaudio",
         "pulseaudio#microphone",
-        "cpu",
-        "memory",
-        "temperature",
-        "backlight",
-        "clock",
         "tray",
+        "clock",
         "idle_inhibitor",
         "custom/power"
     ],
@@ -211,7 +211,25 @@
         },
         "escape": true,
         "exec": "$HOME/.config/waybar/mediaplayer.py",
-        "interval": 2
+        "interval": 2,
+        "on-scroll-up": "playerctl next",
+        "on-scroll-down": "playerctl previous"
+    },
+    "custom/media-prev": {
+        "format": "⏮",
+        "on-click": "playerctl previous",
+        "tooltip": false
+    },
+    "custom/media-play": {
+        "exec": "playerctl status 2>/dev/null | grep -q Playing && echo '⏸' || echo '▶'",
+        "interval": 2,
+        "on-click": "playerctl play-pause",
+        "tooltip": false
+    },
+    "custom/media-next": {
+        "format": "⏭",
+        "on-click": "playerctl next",
+        "tooltip": false
     },
     "custom/os_button": {
       "format": "󰣇",
