@@ -10,6 +10,21 @@ simply keeping trask of my dotfiles and packages
 - mount usb devices `udisks2 udiskie`
 - `keepassxc`
 
+## shell prompt (starship)
+Powerline "bubble" prompt, multiline, Catppuccin Mocha.
+
+Install (the Nerd Font is required for the separators/icons):
+
+`sudo pacman -S starship ttf-jetbrains-mono-nerd`
+
+Set the terminal font to `JetBrainsMono Nerd Font`, then hook starship into bash by adding this line to `~/.bashrc` and restarting the shell:
+
+```bash
+eval "$(starship init bash)"
+```
+
+The config is tracked in this repo at `.config/starship.toml` (symlink/hardlink it to `~/.config/starship.toml`).
+
 ## AUR
 - [Hardinfo2](https://aur.archlinux.org/packages/hardinfo2)
 - [qview](https://aur.archlinux.org/qview.git)

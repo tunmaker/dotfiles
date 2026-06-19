@@ -4,4 +4,5 @@
 !.config/waybar
 !.config/kitty
 !.config/rofi
+!.config/starship.toml
 !Pictures/wallpapers
