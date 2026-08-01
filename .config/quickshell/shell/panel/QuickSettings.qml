@@ -276,6 +276,8 @@ PanelWindow {
 
             MediaCard {}
 
+            NotificationList {}
+
             UserRow {}
         }
     }

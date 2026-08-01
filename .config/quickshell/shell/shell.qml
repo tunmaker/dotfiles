@@ -31,6 +31,23 @@ ShellRoot {
         }
     }
 
+    // qs -c shell ipc call notifications clear
+    IpcHandler {
+        target: "notifications"
+
+        function clear(): void {
+            Notifications.clearAll();
+        }
+
+        function dismissPopups(): void {
+            Notifications.clearPopups();
+        }
+
+        function count(): int {
+            return Notifications.count;
+        }
+    }
+
     // Bindable from Hyprland with hl.dsp.global("qs:quicksettings")
     GlobalShortcut {
         appid: "qs"

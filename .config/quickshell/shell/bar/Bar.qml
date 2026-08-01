@@ -5,6 +5,7 @@ import Quickshell.Wayland
 import Quickshell.Hyprland
 import "root:/"
 import "root:/panel"
+import "root:/notifications"
 import "root:/services"
 
 PanelWindow {
@@ -66,6 +67,10 @@ PanelWindow {
                 }
             }
         }
+    }
+
+    Popups {
+        popupScreen: root.modelData
     }
 
     QuickSettings {
