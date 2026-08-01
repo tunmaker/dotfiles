@@ -5,7 +5,7 @@ import Quickshell.Io
 import Quickshell.Services.UPower
 import "root:/"
 
-// Battery / uptime on the left, session actions on the right.
+// Identity and uptime on the left, session actions on the right.
 RowLayout {
     id: root
 
@@ -14,7 +14,8 @@ RowLayout {
     property string uptime: ""
 
     Layout.fillWidth: true
-    spacing: 12
+    Layout.topMargin: 2
+    spacing: 10
 
     // /proc/uptime holds seconds since boot in field 1.
     FileView {
@@ -41,45 +42,39 @@ RowLayout {
         onTriggered: uptimeFile.reload()
     }
 
+    Rectangle {
+        implicitWidth: 34
+        implicitHeight: 34
+        radius: height / 2
+        color: Config.accent
+
+        Text {
+            anchors.centerIn: parent
+            font.family: Config.uiFont
+            font.pixelSize: 14
+            font.weight: Font.DemiBold
+            color: Config.accentText
+            text: (Quickshell.env("USER") || "?").charAt(0).toUpperCase()
+        }
+    }
+
     ColumnLayout {
         Layout.fillWidth: true
-        spacing: 2
+        spacing: 1
 
-        RowLayout {
-            spacing: 6
-            visible: root.battery?.isLaptopBattery ?? false
-
-            Text {
-                font.family: Config.iconFont
-                font.pixelSize: 12
-                color: Config.textDim
-                text: Config.iconBattery
-            }
-
-            Text {
-                font.family: Config.uiFont
-                font.pixelSize: 11
-                color: Config.text
-                text: root.battery ? `${Math.round(root.battery.percentage * 100)}%` : ""
-            }
+        Text {
+            font.family: Config.uiFont
+            font.pixelSize: Config.fontSub
+            color: Config.text
+            text: root.uptime === "" ? "" : `Up ${root.uptime}`
         }
 
-        RowLayout {
-            spacing: 6
-
-            Text {
-                font.family: Config.iconFont
-                font.pixelSize: 12
-                color: Config.textDim
-                text: Config.iconClock
-            }
-
-            Text {
-                font.family: Config.uiFont
-                font.pixelSize: 11
-                color: Config.textDim
-                text: root.uptime
-            }
+        Text {
+            visible: root.battery?.isLaptopBattery ?? false
+            font.family: Config.uiFont
+            font.pixelSize: Config.fontSub
+            color: Config.textDim
+            text: root.battery ? `${Math.round(root.battery.percentage * 100)}%` : ""
         }
     }
 
@@ -97,7 +92,7 @@ RowLayout {
         color: hover.containsMouse ? hoverColor : Config.surface
 
         Behavior on color {
-            ColorAnimation { duration: 120 }
+            ColorAnimation { duration: 130 }
         }
 
         Text {

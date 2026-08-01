@@ -25,6 +25,9 @@ PanelWindow {
 
     WlrLayershell.namespace: "qs-quicksettings"
     WlrLayershell.layer: WlrLayer.Overlay
+    // The focus grab needs a focusable surface to hold onto; without this the
+    // grab activates and clears immediately, closing the panel on its own.
+    WlrLayershell.keyboardFocus: open ? WlrKeyboardFocus.OnDemand : WlrKeyboardFocus.None
 
     anchors {
         top: true
@@ -36,8 +39,8 @@ PanelWindow {
         right: 8
     }
 
-    implicitWidth: 372
-    implicitHeight: layout.implicitHeight + 24
+    implicitWidth: Config.panelWidth
+    implicitHeight: layout.implicitHeight + Config.panelPadding * 2
 
     readonly property var adapter: Bluetooth.defaultAdapter
     readonly property var sinkAudio: Pipewire.defaultAudioSink?.audio ?? null
@@ -81,10 +84,29 @@ PanelWindow {
     }
 
     // Close when focus moves elsewhere, so a click outside dismisses the panel.
+    // Activation is deferred by one tick so the surface is mapped first,
+    // otherwise the grab clears before it can take hold.
     HyprlandFocusGrab {
+        id: grab
+
         windows: [root]
-        active: root.open
         onCleared: root.requestClose()
+    }
+
+    Timer {
+        id: grabDelay
+
+        interval: 120
+        onTriggered: grab.active = true
+    }
+
+    onOpenChanged: {
+        if (root.open) {
+            grabDelay.restart();
+        } else {
+            grabDelay.stop();
+            grab.active = false;
+        }
     }
 
     PwObjectTracker {
@@ -93,23 +115,23 @@ PanelWindow {
 
     Rectangle {
         anchors.fill: parent
-        radius: 16
+        radius: Config.panelRadius
         color: Config.bg
         border.width: 1
-        border.color: Config.surfaceHover
+        border.color: Config.outline
 
         ColumnLayout {
             id: layout
 
             anchors.fill: parent
-            anchors.margins: 12
-            spacing: 10
+            anchors.margins: Config.panelPadding
+            spacing: 12
 
             GridLayout {
                 Layout.fillWidth: true
                 columns: 2
-                columnSpacing: 8
-                rowSpacing: 8
+                columnSpacing: 10
+                rowSpacing: 10
 
                 Toggle {
                     glyph: Config.iconBluetooth
@@ -132,7 +154,16 @@ PanelWindow {
                 }
 
                 Toggle {
-                    glyph: PowerProfiles.profile === PowerProfile.PowerSaver ? Config.iconPowerSaver : Config.iconBalanced
+                    glyph: {
+                        switch (PowerProfiles.profile) {
+                        case PowerProfile.PowerSaver:
+                            return Config.iconPowerSaver;
+                        case PowerProfile.Performance:
+                            return Config.iconPerformance;
+                        default:
+                            return Config.iconBalanced;
+                        }
+                    }
                     label: root.profileLabel
                     sublabel: "Power profile"
                     active: PowerProfiles.profile !== PowerProfile.Balanced

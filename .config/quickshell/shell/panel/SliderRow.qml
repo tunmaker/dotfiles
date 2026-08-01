@@ -12,37 +12,54 @@ RowLayout {
     signal moved(real fraction)
 
     Layout.fillWidth: true
-    spacing: 10
+    spacing: 12
 
-    Text {
-        font.family: Config.iconFont
-        font.pixelSize: 14
-        color: Config.textDim
-        text: root.glyph
+    Rectangle {
+        implicitWidth: 30
+        implicitHeight: 30
+        radius: height / 2
+        color: Config.surface
+
+        Text {
+            anchors.centerIn: parent
+            font.family: Config.iconFont
+            font.pixelSize: 13
+            color: Config.textDim
+            text: root.glyph
+        }
     }
 
     Rectangle {
         id: track
 
         Layout.fillWidth: true
-        implicitHeight: 8
+        implicitHeight: 12
         radius: height / 2
         color: Config.surface
 
         Rectangle {
+            id: fill
+
             width: Math.max(height, track.width * Math.max(0, Math.min(1, root.value)))
             height: parent.height
             radius: height / 2
-            color: Config.accent
+            color: drag.pressed ? Config.accentHover : Config.accent
+
+            Behavior on width {
+                enabled: !drag.pressed
+                NumberAnimation { duration: 110; easing.type: Easing.OutCubic }
+            }
         }
 
         MouseArea {
+            id: drag
+
             anchors.fill: parent
-            anchors.margins: -6
+            anchors.margins: -8
             cursorShape: Qt.PointingHandCursor
 
-            function apply(mouseX: real): void {
-                root.moved(Math.max(0, Math.min(1, mouseX / track.width)));
+            function apply(x: real): void {
+                root.moved(Math.max(0, Math.min(1, (x - 8) / track.width)));
             }
 
             onPressed: event => apply(event.x)
@@ -51,5 +68,14 @@ RowLayout {
                     apply(event.x);
             }
         }
+    }
+
+    Text {
+        Layout.preferredWidth: 34
+        horizontalAlignment: Text.AlignRight
+        font.family: Config.uiFont
+        font.pixelSize: Config.fontSub
+        color: Config.textDim
+        text: `${Math.round(root.value * 100)}%`
     }
 }
