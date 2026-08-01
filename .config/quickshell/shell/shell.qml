@@ -29,6 +29,10 @@ ShellRoot {
         function expand(name: string): void {
             Panels.expandedSection = name;
         }
+
+        function launcher(): void {
+            Panels.toggleLauncher();
+        }
     }
 
     // qs -c shell ipc call notifications clear
@@ -54,5 +58,12 @@ ShellRoot {
         name: "quicksettings"
         description: "Toggle quick settings panel"
         onPressed: Panels.toggleQuickSettings()
+    }
+
+    GlobalShortcut {
+        appid: "qs"
+        name: "launcher"
+        description: "Toggle application launcher"
+        onPressed: Panels.toggleLauncher()
     }
 }

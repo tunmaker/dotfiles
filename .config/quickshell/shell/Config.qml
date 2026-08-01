@@ -60,4 +60,5 @@ Singleton {
     readonly property string iconChevron: "\uf054"
     readonly property string iconBell: "\uf0f3"
     readonly property string iconBellOff: "\uf1f6"
+    readonly property string iconSearch: "\uf002"
 }

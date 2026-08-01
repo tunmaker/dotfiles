@@ -11,6 +11,7 @@ Singleton {
     id: root
 
     property bool quickSettingsOpen: false
+    property bool launcherOpen: false
 
     // Which picker inside the quick settings panel is expanded:
     // "" | "bluetooth" | "profile". Only one at a time.
@@ -24,7 +25,18 @@ Singleton {
         root.quickSettingsOpen = !root.quickSettingsOpen;
     }
 
+    function toggleLauncher(): void {
+        root.launcherOpen = !root.launcherOpen;
+        if (root.launcherOpen)
+            root.quickSettingsOpen = false;
+    }
+
+    function closeLauncher(): void {
+        root.launcherOpen = false;
+    }
+
     function closeAll(): void {
+        root.launcherOpen = false;
         root.quickSettingsOpen = false;
         root.expandedSection = "";
     }

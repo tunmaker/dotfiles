@@ -6,6 +6,7 @@ import Quickshell.Hyprland
 import "root:/"
 import "root:/panel"
 import "root:/notifications"
+import "root:/launcher"
 import "root:/services"
 
 PanelWindow {
@@ -67,6 +68,10 @@ PanelWindow {
                 }
             }
         }
+    }
+
+    Launcher {
+        launcherScreen: root.modelData
     }
 
     Popups {
