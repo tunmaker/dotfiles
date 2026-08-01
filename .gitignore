@@ -15,3 +15,6 @@
 !/Pictures
 /Pictures/*
 !/Pictures/wallpapers
+
+# Saved wiki page, not configuration
+/.config/waybar/Waybar.html
