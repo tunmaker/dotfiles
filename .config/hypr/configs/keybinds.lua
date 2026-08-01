@@ -9,12 +9,17 @@ hl.bind(mainMod .. " + B", hl.dsp.exec_cmd(prog.browser))
 hl.bind(mainMod .. " + Q", hl.dsp.window.close())
 hl.bind(mainMod .. " + M", hl.dsp.exec_cmd(prog.fileManager))
 hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
-hl.bind(mainMod .. " + R", hl.dsp.exec_cmd(prog.menu))
+hl.bind(mainMod .. " + R", hl.dsp.global("qs:launcher"))
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
 hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("hyprlock"))
 hl.bind(mainMod .. " + W", hl.dsp.exec_cmd("~/.config/hypr/setwallpaper.sh"))
 hl.bind(mainMod .. " + C", hl.dsp.exec_cmd(prog.calculator))
 hl.bind("PRINT", hl.dsp.exec_cmd([[grim -g "$(slurp)" - | wl-copy]]))
+
+-- Shell (Quickshell). These are global shortcuts the shell registers itself;
+-- check them with `hyprctl globalshortcuts`.
+hl.bind(mainMod .. " + N", hl.dsp.global("qs:quicksettings"))
+hl.bind(mainMod .. " + SHIFT + N", hl.dsp.exec_cmd("qs -c shell ipc call notifications clear"))
 
 -- Move focus with mainMod + arrow keys
 hl.bind(mainMod .. " + left",  hl.dsp.focus({ direction = "l" }))

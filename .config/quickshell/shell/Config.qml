@@ -2,8 +2,11 @@ pragma Singleton
 
 import QtQuick
 import Quickshell
+import Quickshell.Io
 
 Singleton {
+    id: root
+
     // Metrics
     readonly property int barHeight: 36
     readonly property int gap: 8
@@ -20,17 +23,45 @@ Singleton {
     readonly property int fontSub: 11
     readonly property int fontIcon: 15
 
-    // Palette
-    readonly property color bg: "#14141b"
-    readonly property color surface: "#1e1e28"
-    readonly property color surfaceHover: "#2a2a36"
-    readonly property color outline: "#32323f"
-    readonly property color accent: "#3584e4"
-    readonly property color accentHover: "#4a94ea"
-    readonly property color accentText: "#ffffff"
-    readonly property color text: "#eceff4"
-    readonly property color textDim: "#98a0ae"
-    readonly property color urgent: "#e05f65"
+    // Palette.
+    //
+    // matugen regenerates colours.json from the wallpaper; this reads it live.
+    // Every colour falls back to the built-in dark palette, so a missing,
+    // half-written or malformed file degrades to something usable rather than
+    // rendering the shell unreadable.
+    readonly property bool themed: generated.accent !== ""
+
+    readonly property color bg: generated.bg || "#14141b"
+    readonly property color surface: generated.surface || "#1e1e28"
+    readonly property color surfaceHover: generated.surfaceHover || "#2a2a36"
+    readonly property color outline: generated.outline || "#32323f"
+    readonly property color accent: generated.accent || "#3584e4"
+    readonly property color accentHover: generated.accentHover || "#4a94ea"
+    readonly property color accentText: generated.accentText || "#ffffff"
+    readonly property color text: generated.text || "#eceff4"
+    readonly property color textDim: generated.textDim || "#98a0ae"
+    readonly property color urgent: generated.urgent || "#e05f65"
+
+    FileView {
+        path: `${Quickshell.env("HOME")}/.local/state/quickshell/colors.json`
+        watchChanges: true
+        onFileChanged: reload()
+
+        JsonAdapter {
+            id: generated
+
+            property string bg: ""
+            property string surface: ""
+            property string surfaceHover: ""
+            property string outline: ""
+            property string accent: ""
+            property string accentHover: ""
+            property string accentText: ""
+            property string text: ""
+            property string textDim: ""
+            property string urgent: ""
+        }
+    }
 
     // Nerd Font glyphs as escapes, so every other file stays plain ASCII.
     // Each codepoint is verified present in Symbols Nerd Font; check a new one

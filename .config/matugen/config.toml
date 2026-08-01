@@ -1,0 +1,6 @@
+# Colours are consumed by the Quickshell config, which reloads them live.
+[config]
+
+[templates.quickshell]
+input_path = '~/.config/matugen/templates/quickshell-colors.json'
+output_path = '~/.local/state/quickshell/colors.json'
