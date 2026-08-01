@@ -12,11 +12,20 @@ Singleton {
 
     property bool quickSettingsOpen: false
 
+    // Which picker inside the quick settings panel is expanded:
+    // "" | "bluetooth" | "profile". Only one at a time.
+    property string expandedSection: ""
+
+    function toggleSection(name: string): void {
+        root.expandedSection = root.expandedSection === name ? "" : name;
+    }
+
     function toggleQuickSettings(): void {
         root.quickSettingsOpen = !root.quickSettingsOpen;
     }
 
     function closeAll(): void {
         root.quickSettingsOpen = false;
+        root.expandedSection = "";
     }
 }

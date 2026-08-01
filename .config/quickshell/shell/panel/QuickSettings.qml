@@ -50,6 +50,8 @@ PanelWindow {
     readonly property bool hasWifi: (Networking.devices?.values ?? []).some(device => device.type === DeviceType.Wifi)
 
     readonly property string btSublabel: {
+        if ((root.adapter?.state ?? -1) === BluetoothAdapterState.Blocked)
+            return "Blocked";
         if (!(root.adapter?.enabled ?? false))
             return "Off";
         const connected = (root.adapter?.devices?.values ?? []).filter(device => device.connected);
@@ -59,6 +61,8 @@ PanelWindow {
     }
 
     readonly property string wifiSublabel: {
+        if (!Networking.wifiHardwareEnabled)
+            return "Blocked";
         if (!Networking.wifiEnabled)
             return "Off";
         for (const device of Networking.devices?.values ?? []) {
@@ -106,6 +110,7 @@ PanelWindow {
         } else {
             grabDelay.stop();
             grab.active = false;
+            Panels.expandedSection = "";
         }
     }
 
@@ -138,10 +143,13 @@ PanelWindow {
                     label: "Bluetooth"
                     sublabel: root.btSublabel
                     active: root.adapter?.enabled ?? false
+                    expandable: root.adapter !== null
+                    expanded: Panels.expandedSection === "bluetooth"
                     onToggled: {
                         if (root.adapter)
                             root.adapter.enabled = !root.adapter.enabled;
                     }
+                    onExpandRequested: Panels.toggleSection("bluetooth")
                 }
 
                 Toggle {
@@ -167,6 +175,9 @@ PanelWindow {
                     label: root.profileLabel
                     sublabel: "Power profile"
                     active: PowerProfiles.profile !== PowerProfile.Balanced
+                    expandable: true
+                    expanded: Panels.expandedSection === "profile"
+                    onExpandRequested: Panels.toggleSection("profile")
                     onToggled: {
                         // Balanced -> Power Saver -> Performance (when supported) -> Balanced
                         if (PowerProfiles.profile === PowerProfile.Balanced)
@@ -186,6 +197,62 @@ PanelWindow {
                     onToggled: {
                         if (root.sinkAudio)
                             root.sinkAudio.muted = !root.sinkAudio.muted;
+                    }
+                }
+            }
+
+            // Expanded picker. Height animates so the panel grows smoothly.
+            Rectangle {
+                Layout.fillWidth: true
+
+                readonly property bool shown: Panels.expandedSection !== ""
+
+                clip: true
+                radius: Config.tileRadius
+                color: Config.surface
+                implicitHeight: shown ? picker.implicitHeight + 12 : 0
+                opacity: shown ? 1 : 0
+
+                Behavior on implicitHeight {
+                    NumberAnimation { duration: 160; easing.type: Easing.OutCubic }
+                }
+                Behavior on opacity {
+                    NumberAnimation { duration: 140 }
+                }
+
+                Item {
+                    id: picker
+
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    anchors.top: parent.top
+                    anchors.topMargin: 6
+                    // Height of the visible list only, not the tallest one.
+                    implicitHeight: {
+                        switch (Panels.expandedSection) {
+                        case "bluetooth":
+                            return bluetoothList.implicitHeight;
+                        case "profile":
+                            return profileList.implicitHeight;
+                        default:
+                            return 0;
+                        }
+                    }
+
+                    BluetoothList {
+                        id: bluetoothList
+
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+                        visible: Panels.expandedSection === "bluetooth"
+                    }
+
+                    ProfileList {
+                        id: profileList
+
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+                        visible: Panels.expandedSection === "profile"
                     }
                 }
             }

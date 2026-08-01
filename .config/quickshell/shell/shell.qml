@@ -24,6 +24,11 @@ ShellRoot {
         function close(): void {
             Panels.closeAll();
         }
+
+        // name: "bluetooth" | "profile" | "" to collapse
+        function expand(name: string): void {
+            Panels.expandedSection = name;
+        }
     }
 
     // Bindable from Hyprland with hl.dsp.global("qs:quicksettings")
