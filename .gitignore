@@ -1,8 +1,16 @@
 /*
 
-!.config/hypr
-!.config/waybar
-!.config/kitty
-!.config/rofi
-!.config/starship.toml
-!Pictures/wallpapers
+# Git does not descend into an excluded directory, so each level must be
+# re-included before its children can be allowlisted.
+!/.config
+/.config/*
+!/.config/hypr
+!/.config/waybar
+!/.config/kitty
+!/.config/rofi
+!/.config/quickshell
+!/.config/starship.toml
+
+!/Pictures
+/Pictures/*
+!/Pictures/wallpapers
