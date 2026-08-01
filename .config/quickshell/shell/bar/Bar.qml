@@ -2,12 +2,18 @@ import QtQuick
 import QtQuick.Layouts
 import Quickshell
 import Quickshell.Wayland
+import Quickshell.Hyprland
 import "root:/"
+import "root:/panel"
+import "root:/services"
 
 PanelWindow {
     id: root
 
     required property var modelData
+
+    // Only the focused monitor shows the popup.
+    readonly property bool panelOpen: Panels.quickSettingsOpen && Hyprland.focusedMonitor?.name === modelData.name
 
     screen: modelData
     color: "transparent"
@@ -45,7 +51,26 @@ PanelWindow {
 
             Tray { Layout.alignment: Qt.AlignVCenter }
 
-            StatusIcons { Layout.alignment: Qt.AlignVCenter }
+            // MouseArea wraps rather than nests inside StatusIcons: an anchored
+            // item directly inside a layout is undefined behaviour in Qt Quick.
+            MouseArea {
+                Layout.alignment: Qt.AlignVCenter
+                implicitWidth: statusIcons.implicitWidth
+                implicitHeight: statusIcons.implicitHeight
+                cursorShape: Qt.PointingHandCursor
+                onClicked: Panels.toggleQuickSettings()
+
+                StatusIcons {
+                    id: statusIcons
+                    anchors.fill: parent
+                }
+            }
         }
+    }
+
+    QuickSettings {
+        panelScreen: root.modelData
+        open: root.panelOpen
+        onRequestClose: Panels.closeAll()
     }
 }

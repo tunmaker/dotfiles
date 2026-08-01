@@ -44,15 +44,15 @@ RowLayout {
 
     Glyph {
         visible: Bluetooth.defaultAdapter?.enabled ?? false
-        text: ""
+        text: Config.iconBluetooth
         color: Config.accent
     }
 
     Glyph {
         text: {
             if (root.netDevice === null)
-                return "";
-            return root.netDevice.type === DeviceType.Wired ? "" : "";
+                return Config.iconDisconnected;
+            return root.netDevice.type === DeviceType.Wired ? Config.iconEthernet : Config.iconWifi;
         }
         color: root.netDevice === null ? Config.urgent : Config.textDim
     }
@@ -63,8 +63,8 @@ RowLayout {
         Glyph {
             text: {
                 if (!root.sinkAudio || root.sinkAudio.muted)
-                    return "";
-                return root.sinkAudio.volume > 0.5 ? "" : "";
+                    return Config.iconVolumeMuted;
+                return root.sinkAudio.volume > 0.5 ? Config.iconVolumeHigh : Config.iconVolumeLow;
             }
             color: root.sinkAudio?.muted ? Config.urgent : Config.textDim
         }
@@ -83,7 +83,7 @@ RowLayout {
         visible: root.battery?.isLaptopBattery ?? false
 
         Glyph {
-            text: ""
+            text: Config.iconBattery
             color: (root.battery?.percentage ?? 1) <= 0.15 ? Config.urgent : Config.textDim
         }
 

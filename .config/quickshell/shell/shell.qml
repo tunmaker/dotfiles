@@ -1,12 +1,36 @@
 //@ pragma UseQApplication
 
 import Quickshell
+import Quickshell.Io
+import Quickshell.Hyprland
 import "bar"
+import "services"
 
 ShellRoot {
     Variants {
         model: Quickshell.screens
 
         delegate: Bar {}
+    }
+
+    // qs -c shell ipc call panel toggle
+    IpcHandler {
+        target: "panel"
+
+        function toggle(): void {
+            Panels.toggleQuickSettings();
+        }
+
+        function close(): void {
+            Panels.closeAll();
+        }
+    }
+
+    // Bindable from Hyprland with hl.dsp.global("qs:quicksettings")
+    GlobalShortcut {
+        appid: "qs"
+        name: "quicksettings"
+        description: "Toggle quick settings panel"
+        onPressed: Panels.toggleQuickSettings()
     }
 }
