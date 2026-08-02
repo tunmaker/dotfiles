@@ -27,7 +27,7 @@ controls): `nm-connection-editor blueman pavucontrol-qt`
 Config in `.config/quickshell/shell`, started from Hyprland autostart as
 `qs -c shell`. Provides:
 
-- top bar: workspaces, clock, tray, status icons
+- top bar: workspaces, clock, system stats (net traffic, cpu, temp, ram), tray, status icons
 - quick settings panel: bluetooth / wi-fi / power-profile / mute toggles with
   expandable device pickers, volume + brightness sliders, media player card,
   notification history, session buttons

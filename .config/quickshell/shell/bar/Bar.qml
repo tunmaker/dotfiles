@@ -51,6 +51,8 @@ PanelWindow {
 
             Item { Layout.fillWidth: true }
 
+            SysMonitor { Layout.alignment: Qt.AlignVCenter }
+
             Tray { Layout.alignment: Qt.AlignVCenter }
 
             // MouseArea wraps rather than nests inside StatusIcons: an anchored

@@ -92,4 +92,9 @@ Singleton {
     readonly property string iconBell: "\uf0f3"
     readonly property string iconBellOff: "\uf1f6"
     readonly property string iconSearch: "\uf002"
+    readonly property string iconCpu: "\uf2db"
+    readonly property string iconTemp: "\uf2c9"
+    readonly property string iconRam: "\uf233"
+    readonly property string iconUp: "\uf062"
+    readonly property string iconDown: "\uf063"
 }
