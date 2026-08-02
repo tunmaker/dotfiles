@@ -5,9 +5,9 @@ import Quickshell.Wayland
 import Quickshell.Hyprland
 import "root:/"
 import "root:/panel"
+import "root:/services"
 import "root:/notifications"
 import "root:/launcher"
-import "root:/services"
 
 PanelWindow {
     id: root
@@ -34,31 +34,35 @@ PanelWindow {
         anchors.fill: parent
         color: Config.bg
 
+        // The clock is anchored to the window centre rather than laid out
+        // between the side clusters, so it stays centred on the screen no
+        // matter how the clusters differ in width.
         RowLayout {
-            anchors.fill: parent
+            anchors.left: parent.left
             anchors.leftMargin: Config.gap
+            anchors.verticalCenter: parent.verticalCenter
+            spacing: 14
+
+            Workspaces { screenName: root.modelData.name }
+        }
+
+        Clock {
+            anchors.centerIn: parent
+        }
+
+        RowLayout {
+            anchors.right: parent.right
             anchors.rightMargin: Config.gap
+            anchors.verticalCenter: parent.verticalCenter
             spacing: Config.gap
 
-            Workspaces {
-                screenName: root.modelData.name
-                Layout.alignment: Qt.AlignVCenter
-            }
+            SysMonitor {}
 
-            Item { Layout.fillWidth: true }
-
-            Clock { Layout.alignment: Qt.AlignVCenter }
-
-            Item { Layout.fillWidth: true }
-
-            SysMonitor { Layout.alignment: Qt.AlignVCenter }
-
-            Tray { Layout.alignment: Qt.AlignVCenter }
+            Tray {}
 
             // MouseArea wraps rather than nests inside StatusIcons: an anchored
             // item directly inside a layout is undefined behaviour in Qt Quick.
             MouseArea {
-                Layout.alignment: Qt.AlignVCenter
                 implicitWidth: statusIcons.implicitWidth
                 implicitHeight: statusIcons.implicitHeight
                 cursorShape: Qt.PointingHandCursor
