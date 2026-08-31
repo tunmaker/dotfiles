@@ -18,6 +18,11 @@ hl.on("hyprland.start", function()
     hl.exec_cmd("systemctl --user start wireplumber")
     hl.exec_cmd("systemctl --user start hyprland-session.target")
 
+    hl.exec_cmd("[workspace special:magic silent] keepassxc")
+
+    -- kDrive ships no Wayland tray icon; xcb runs it through XWayland.
+    hl.exec_cmd("QT_QPA_PLATFORM=xcb ~/.local/bin/kDrive-3.8.5.2-amd64.AppImage")
+
     -- nm-applet and blueman-applet are no longer started: the shell has its own
     -- network and bluetooth controls, and their tray icons only duplicated them.
 
